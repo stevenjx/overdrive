@@ -56,6 +56,9 @@ git checkout -B "$BUILD_BRANCH" main
 git merge --no-ff "$BRANCH" -m "build: merge $BRANCH into $BUILD_BRANCH"
 git push --force-with-lease origin "$BUILD_BRANCH"
 
+# 回到功能分支：构建分支每次都会被 main 覆盖，停在那里改代码会丢提交。
+git checkout "$BRANCH"
+
 echo
 echo "完成：$BUILD_BRANCH 已包含上游 $(git rev-parse --short upstream/main) 与 $BRANCH 的全部提交。"
 echo "在 GitHub → Actions → build → Run workflow 里选择分支 $BUILD_BRANCH 即可构建。"
