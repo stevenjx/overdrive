@@ -3,6 +3,8 @@
 这个仓库是 [MyLuxy/overdrive](https://github.com/MyLuxy/overdrive) 的 fork。
 **不向上游提交任何东西**，只单向同步；自己的功能只在自己的构建里使用。
 
+日常怎么写代码、怎么预览、怎么上机，见 [DEVELOPMENT.md](DEVELOPMENT.md)。
+
 ## 三条分支，各管一件事
 
 | 分支 | 作用 | 规则 |

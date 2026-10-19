@@ -325,7 +325,8 @@ on the local network and installs its PS5 / PS4 packages directly, without touch
 the download queue or the catalog data. Discovery is a UDP broadcast on port 48620; the packages
 are downloaded to the console and handed to the system installer.
 
-See [docs/PS5MANAGER.md](docs/PS5MANAGER.md) for how it works and how to troubleshoot it, and
+See [docs/PS5MANAGER.md](docs/PS5MANAGER.md) for how it works and how to troubleshoot it,
+[docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for the day-to-day development loop, and
 [docs/WORKFLOW.md](docs/WORKFLOW.md) for keeping this fork in sync with upstream.
 
 ## Credits
