@@ -318,6 +318,17 @@ Nothing else in the framework is changed.
 
 </details>
 
+## Local library (this fork)
+
+This fork adds a **NAS** tab that finds a [ps5-manager](https://github.com/stevenjx/ps5-manager)
+on the local network and installs its PS5 / PS4 packages directly, without touching the store,
+the download queue or the catalog data. Discovery is a UDP broadcast on port 48620; the packages
+are downloaded to the console and handed to the system installer.
+
+See [docs/PS5MANAGER.md](docs/PS5MANAGER.md) for how it works and how to troubleshoot it,
+[docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) for the day-to-day development loop, and
+[docs/WORKFLOW.md](docs/WORKFLOW.md) for keeping this fork in sync with upstream.
+
 ## Credits
 
 - **[MyLuxy](https://github.com/MyLuxy)**, who decompiled Overdrive, recovered its source and rebuilt it.

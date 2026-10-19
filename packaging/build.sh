@@ -31,7 +31,7 @@ missing=()
 for tool in cmake ninja nasm curl unzip zip; do
     command -v "$tool" >/dev/null || missing+=("$tool")
 done
-if [ "$package" = 1 ] && ! command -v mkfs.exfat >/dev/null; then missing+=("mkfs.exfat (exfatprogs)"); fi
+if [ "$package" = 1 ] && [ "$(uname -s)" != "Darwin" ] && ! command -v mkfs.exfat >/dev/null; then missing+=("mkfs.exfat (exfatprogs)"); fi
 if [ "${#missing[@]}" -gt 0 ]; then
     echo "error: missing tools: ${missing[*]}" >&2
     echo "       apt: cmake ninja-build nasm curl unzip zip exfatprogs" >&2
@@ -42,9 +42,16 @@ echo "→ building the PS5 app with LLVM at $llvm"
 (cd "$root/ps5-react" && python3 tools/build_ps5.py --app-dir "$root/app" --llvm "$llvm")
 [ "$package" = 1 ] || exit 0
 
-echo "→ packaging Overdrive.exfat (sudo: the image is mounted to fill it)"
-sudo bash "$root/packaging/make-exfat.sh" "$root/ps5-react/dist/PPSA99058" "$root/Overdrive.exfat" OVERDRIVE
-sudo chown "$(id -u):$(id -g)" "$root/Overdrive.exfat"
+if [ "$(uname -s)" = "Darwin" ]; then
+    # macOS has no loop devices: make-exfat-macos.sh formats a raw image through
+    # hdiutil + newfs_exfat instead, and needs no root.
+    echo "→ packaging Overdrive.exfat (macOS: hdiutil + newfs_exfat)"
+    bash "$root/packaging/make-exfat-macos.sh" "$root/ps5-react/dist/PPSA99058" "$root/Overdrive.exfat" OVERDRIVE
+else
+    echo "→ packaging Overdrive.exfat (sudo: the image is mounted to fill it)"
+    sudo bash "$root/packaging/make-exfat.sh" "$root/ps5-react/dist/PPSA99058" "$root/Overdrive.exfat" OVERDRIVE
+    sudo chown "$(id -u):$(id -g)" "$root/Overdrive.exfat"
+fi
 # The in-app updater fetches one name, for an image install: the image alone at the root of update.zip.
 rm -f "$root/update.zip"
 zip -q -X -j "$root/update.zip" "$root/Overdrive.exfat"

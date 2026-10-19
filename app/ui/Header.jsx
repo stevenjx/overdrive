@@ -199,6 +199,18 @@ import { FocusScope, Text, View } from '@ps5-react/core';
             /* @__PURE__ */ (0, jsx)(
               NavItem,
               {
+                focusKey: keyOf("nas"),
+                icon: "hardDrive",
+                label: t2("nav.nas"),
+                current: shown === "nas",
+                onPress: on.nas,
+                onLayout: track("nas"),
+                nextFocusDown: down
+              }
+            ),
+            /* @__PURE__ */ (0, jsx)(
+              NavItem,
+              {
                 focusKey: keyOf("files"),
                 icon: "folder",
                 current: shown === "files",
