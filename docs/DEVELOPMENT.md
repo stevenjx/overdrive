@@ -78,13 +78,13 @@ curl -s localhost:8280/api/overdrive/manifest | head -c 200
 
 ## 生成自己的 Overdrive.exfat
 
-### 先改版本号（重要）
+### 版本号已经替你改好了
 
 应用内置自动更新，检查的是 `MyLuxy/overdrive` 的最新 release，
-比较的是 `app/version.js` 里的 `VERSION`。如果你保持 `1.0.7` 不动，
+比较的是 `app/version.js` 里的 `VERSION`。如果保持上游的 `1.0.7`，
 作者一发 `v1.0.8`，你的应用就会提示更新，装完 NAS 页面就没了。
 
-把自己的构建标成更高、且不会再被超越的版本：
+这个 fork 已经改成：
 
 ```js
 // app/version.js
@@ -92,9 +92,12 @@ var VERSION = "9.9.9";
 ```
 
 ```json
-// app/app.json（PS5 包的版本号，可选但建议一起改）
+// app/app.json（PS5 包的版本号）
 "version": "09.009.000"
 ```
+
+这样更新检查永远不触发，功能不会被官方包覆盖。代价是看不到「有新版本」的提示——
+你本来就靠 `git rebase` 手动同步上游，所以是一致的。
 
 注意别写成 `1.0.7-custom`：更新检查按 `split(".").map(Number)` 比较，
 非数字段会变成 `NaN`，被当成 0 处理，反而更小。
